@@ -1,0 +1,27 @@
+#nomer 5
+from sympy import * # be very careful when using this!
+# if you are using Jupyter Lab or Notebook, use the following line instead:
+init_printing(use_latex=True)
+
+x = symbols("x")
+
+
+f = cos(x)
+xi = pi/4
+xip1 = pi/3
+h = xip1 - xi
+f_true = cos(xip1)
+# zeroth order
+f_approx = cos(xi) # or simply call cos(xi)
+for n in range(1,6): # from 1 to 6
+    new_term = N(diff(f, x, n).subs({x:xi})* h**n / factorial(n))
+    f_approx = f_approx + new_term
+    ε = abs(N((f_approx-0.5)/0.5))*100
+    print("iterasi ke-",n," --f_approx = ", N(f_approx.subs({x: xi}))," --galat = ", ε, "%")
+    #print(N(f_approx.subs({x: xi}))) # use N to force numerical expression
+    
+f_true = cos(xip1)
+print("f_true = ", f_true)
+print("f_approx = ", N(f_approx))
+print("f_true type : ", type(f_true))
+print("f_approx type : ", type(f_approx))
